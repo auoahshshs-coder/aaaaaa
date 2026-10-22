@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Casa Tacho — site de exemplo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF2EF;--surface:#fff;--ink:#1E2426;--muted:#5B6568;--accent:#1F5C52;--on:#fff;--sun:#E8B13A;--line:#D5DDD8;--tint:#E3EBE6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121816;--surface:#1B2421;--ink:#E8EEEA;--muted:#9AA8A2;--accent:#5FB3A1;--on:#0E1815;--line:#2C3833;--tint:#223029}}
+:root[data-theme="dark"]{--bg:#121816;--surface:#1B2421;--ink:#E8EEEA;--muted:#9AA8A2;--accent:#5FB3A1;--on:#0E1815;--line:#2C3833;--tint:#223029}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+.aviso{background:var(--sun);color:#1E2426;text-align:center;padding:.5rem 1rem;font-size:.95rem;font-weight:600}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem clamp(1rem,4vw,3rem);border-bottom:1px solid var(--line)}
+.marca{font-size:1.5rem;font-weight:800;letter-spacing:-.02em}
+.carrinho{display:flex;align-items:center;gap:.75rem;font-weight:600}
+.carrinho b{background:var(--accent);color:var(--on);border-radius:999px;padding:.15rem .7rem}
+.hero{background:var(--accent);color:var(--on);display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:2rem;padding:clamp(2rem,6vw,4.5rem) clamp(1rem,4vw,3rem)}
+.hero h1{font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.02;letter-spacing:-.03em;font-weight:800;margin:0 0 1rem;max-width:14ch}
+.hero p{font-size:1.15rem;max-width:36ch;margin:0 0 1.5rem}
+.btn{display:inline-block;border:0;border-radius:6px;padding:.75rem 1.25rem;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+.hero .btn{background:var(--sun);color:#1E2426}
+.disco{background:var(--sun);border-radius:50%;aspect-ratio:1;display:grid;place-items:center;max-width:380px;width:100%;justify-self:center}
+.disco svg{width:86%}
+main{padding:clamp(2rem,5vw,3.5rem) clamp(1rem,4vw,3rem)}
+main h2{font-size:1.9rem;letter-spacing:-.02em;margin:0 0 1.5rem}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.foto{background:var(--tint);padding:1rem}
+.foto svg{display:block;width:100%;height:auto}
+.info{padding:1rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+.info h3{margin:0;font-size:1.1rem}
+.info small{color:var(--muted)}
+.preco{font-size:1.5rem;font-weight:800;margin-top:auto;padding-top:.5rem}
+.item .btn{background:var(--accent);color:var(--on);margin-top:.5rem;width:100%}
+.item .btn.comprar{background:transparent;color:var(--ink);border:2px solid var(--accent)}
+.item .btn.ok{background:var(--sun);color:#1E2426}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+footer{padding:2rem clamp(1rem,4vw,3rem);border-top:1px solid var(--line);color:var(--muted)}
+@media (max-width:720px){.hero{grid-template-columns:1fr}.disco{max-width:260px;order:-1}}
+</style>
+</head>
+<body>
+<div class="aviso">Este é um site de exemplo: produtos, preços e fotos são fictícios.</div>
+<header class="top">
+  <div class="marca">Casa Tacho</div>
+  <div class="carrinho" aria-live="polite">Carrinho <b id="qtd">0</b> <span id="total">R$ 0,00</span></div>
+</header>
+<section class="hero">
+  <div>
+    <h1>Tudo pra panela ir ao fogo.</h1>
+    <p>Caçarolas, frigideiras e woks para a cozinha de todo dia.</p>
+    <a class="btn" href="#produtos">Ver produtos</a>
+  </div>
+  <div class="disco" id="heroimg"></div>
+</section>
+<main id="produtos">
+  <h2>Mais vendidas</h2>
+  <div class="grade" id="grade"></div>
+</main>
+<footer>Casa Tacho é uma loja inventada para demonstração. Nenhuma compra é processada.</footer>
+<script>
+function desenho(t,c,d){
+  var s='<svg viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><ellipse cx="100" cy="168" rx="72" ry="7" fill="#000" opacity=".15"/>';
+  if(t==='wok'){
+    s+='<rect x="6" y="90" width="22" height="9" rx="4.5" fill="'+d+'"/><rect x="160" y="92" width="36" height="9" rx="4.5" fill="#23272A"/><path d="M26 92h136a68 68 0 0 1-136 0z" fill="'+c+'"/><rect x="24" y="86" width="140" height="8" rx="4" fill="'+d+'"/><path d="M44 106q8 34 38 44" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" opacity=".2"/>';
+  }else if(t==='pan'){
+    s+='<rect x="140" y="116" width="54" height="10" rx="5" fill="#23272A"/><path d="M30 112h112l-8 34a8 8 0 0 1-8 6H46a8 8 0 0 1-8-6z" fill="'+c+'"/><rect x="26" y="104" width="120" height="9" rx="4.5" fill="'+d+'"/><rect x="44" y="120" width="9" height="26" rx="4.5" fill="#fff" opacity=".2"/>';
+  }else{
+    s+='<rect x="18" y="92" width="28" height="10" rx="5" fill="'+d+'"/><rect x="154" y="92" width="28" height="10" rx="5" fill="'+d+'"/><path d="M38 80h124v62a14 14 0 0 1-14 14H52a14 14 0 0 1-14-14z" fill="'+c+'"/><rect x="50" y="90" width="10" height="54" rx="5" fill="#fff" opacity=".2"/><path d="M32 80Q100 36 168 80z" fill="'+d+'"/><circle cx="100" cy="56" r="7" fill="#23272A"/>';
+    if(t==='pressao') s+='<rect x="126" y="56" width="9" height="12" rx="2" fill="#23272A"/>';
+  }
+  return s+'</svg>';
+}
+var produtos=[
+ {n:'Caçarola 20 cm',d:'Alumínio com tampa de vidro',p:129.90,t:'pote',c:'#2E7D6B',k:'#1F5C52'},
+ {n:'Frigideira antiaderente 26 cm',d:'Cabo removível',p:89.90,t:'pan',c:'#3A4247',k:'#23272A'},
+ {n:'Panela de ferro 24 cm',d:'Pré-temperada, vai ao forno',p:219.90,t:'pote',c:'#B5452F',k:'#8A301F'},
+ {n:'Wok 32 cm',d:'Fundo reforçado',p:149.90,t:'wok',c:'#4A5459',k:'#2C3337'},
+ {n:'Panela de pressão 4,5 L',d:'Aço inox, válvula de segurança',p:179.90,t:'pressao',c:'#B9C2C6',k:'#8B979C'},
+ {n:'Jogo de panelas 5 peças',d:'Esmaltadas, amarelo mostarda',p:389.90,t:'pote',c:'#E8B13A',k:'#C48E1D'}
+];
+function brl(v){return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+var qtd=0,total=0;
+document.getElementById('heroimg').innerHTML=desenho('pote','#2E7D6B','#1F5C52');
+var g=document.getElementById('grade');
+produtos.forEach(function(x,i){
+  var a=document.createElement('article');a.className='item';
+  a.innerHTML='<div class="foto">'+desenho(x.t,x.c,x.k)+'</div><div class="info"><h3>'+x.n+'</h3><small>'+x.d+'</small><div class="preco">'+brl(x.p)+'</div><button class="btn" type="button">Adicionar ao carrinho</button><button class="btn comprar" type="button">Comprar agora</button></div>';
+  var b=a.querySelector('button');
+  b.addEventListener('click',function(){
+    qtd++;total+=x.p;
+    document.getElementById('qtd').textContent=qtd;
+    document.getElementById('total').textContent=brl(total);
+    b.textContent='Adicionado';b.classList.add('ok');
+    setTimeout(function(){b.textContent='Adicionar ao carrinho';b.classList.remove('ok')},1200);
+  });
+  a.querySelector('.comprar').addEventListener('click',function(){
+    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','_blank','noopener');
+  });
+  g.appendChild(a);
+});
+</script>
+</body>
+</html>
